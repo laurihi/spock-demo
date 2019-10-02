@@ -18,6 +18,10 @@ public class BlogService {
         this.blogApiClient = blogApiClient;
     }
 
+    public PostList getPostsByUser(long userId){
+        List<Post> usersPosts = blogApiClient.getPostsByUser(userId);
+        return new PostList(usersPosts);
+    }
     public PostList getPosts() {
         List<Post> posts = blogApiClient.getPosts();
         PostList result = new PostList(posts);

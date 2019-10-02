@@ -47,4 +47,14 @@ class BlogServiceSpec extends Specification {
         postList.posts.size() == 0
     }
 
+    def "when getting all posts for a user, user id is given to blog api client"(){
+        given: "posts by user id wanted"
+            def userId = 10l
+        when: "blog service is called for post listing with the user id"
+            blogService.getPostsByUser(userId);
+        then: "blog api client is called with the same user id"
+            1 * blogApiClient.getPostsByUser(10l) >> []
+    }
+
+
 }

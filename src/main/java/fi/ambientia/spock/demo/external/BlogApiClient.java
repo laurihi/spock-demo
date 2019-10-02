@@ -23,6 +23,18 @@ public class BlogApiClient {
         this.restTemplate = new RestTemplate();
     }
 
+    public List<Post> getPostsByUser(long userId){
+
+        ResponseEntity<List<Post>> response = restTemplate.exchange(
+                postApiBase + API_ENDPOINT_POSTS + "?userId="+userId,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Post>>() {
+                });
+
+        return response.getBody();
+    }
+
     public List<Post> getPosts(){
 
         ResponseEntity<List<Post>> response = restTemplate.exchange(

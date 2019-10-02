@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.1.8.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
+	id 'groovy'
 }
 
 group = 'fi.ambientia.spock.demo'
@@ -15,4 +16,11 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	testCompile group: 'org.spockframework', name: 'spock-core', version: '1.3-groovy-2.4'
+	testCompile group: 'org.spockframework', name: 'spock-spring', version: '1.3-groovy-2.4'
+
+	testImplementation 'org.codehaus.groovy:groovy-all:2.4.15'
+
 }
+

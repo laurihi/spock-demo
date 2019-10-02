@@ -40,11 +40,11 @@ class BlogServiceSpec extends Specification {
 
     def "when getting all posts, zero posts does not cause a problem"(){
         given: "blogApiClient returns 0 posts"
-        blogApiClient.getPosts() >> []
+            blogApiClient.getPosts() >> []
         when: "blog service is called for post listing"
-        PostList postList = blogService.getPosts();
+            PostList postList = blogService.getPosts();
         then: "post list content length equals to zero"
-        postList.posts.size() == 0
+            postList.posts.size() == 0
     }
 
     def "when getting all posts for a user, user id is given to blog api client"(){
@@ -56,5 +56,18 @@ class BlogServiceSpec extends Specification {
             1 * blogApiClient.getPostsByUser(10l) >> []
     }
 
+    def "blog service filters out faulty results from blog api client"(){
+        given: "blogApiClient returns one post which is not by user id"
+            def userId = 10l
+            def correctPost = new Post()
+            def incorrectPost = new Post()
+            correctPost.userId = userId
+            incorrectPost.userId = userId+1
+            blogApiClient.getPostsByUser(userId) >> [incorrectPost, correctPost]
+        when: "blog service is called for post listing with the user id"
+            def result = blogService.getPostsByUser(userId);
+        then: "blog api client is called with the same user id"
+            result.posts.size() == 1
+    }
 
 }

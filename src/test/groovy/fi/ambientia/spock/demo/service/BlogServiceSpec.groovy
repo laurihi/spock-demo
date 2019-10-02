@@ -29,4 +29,22 @@ class BlogServiceSpec extends Specification {
             postList.posts.size() == 2
     }
 
+    def "when getting all posts, blogApiClient returns null"(){
+        given: "blogApiClient returns null"
+           blogApiClient.getPosts() >> null
+        when: "blog service is called for post listing"
+            blogService.getPosts();
+        then: "Illegal argument exception is thrown"
+            thrown(IllegalArgumentException)
+    }
+
+    def "when getting all posts, zero posts does not cause a problem"(){
+        given: "blogApiClient returns 0 posts"
+        blogApiClient.getPosts() >> []
+        when: "blog service is called for post listing"
+        PostList postList = blogService.getPosts();
+        then: "post list content length equals to zero"
+        postList.posts.size() == 0
+    }
+
 }

@@ -5,6 +5,7 @@ import fi.ambientia.spock.demo.model.Post
 import fi.ambientia.spock.demo.model.PostList
 import spock.lang.Specification
 import spock.lang.Subject
+import spock.lang.Unroll
 
 class BlogServiceSpec extends Specification {
 
@@ -70,4 +71,41 @@ class BlogServiceSpec extends Specification {
             result.posts.size() == 1
     }
 
+    @Unroll
+    def "blog returns #expectedPosts posts for user #userId" (){
+        given: "blogApiClient returns posts with correct and incorrect user ids"
+            def apiClientResult = []
+            if(correctPostCount != 0) {
+                1.upto(correctPostCount, {
+                    apiClientResult << createPostForUser(userId)
+                })
+            }
+
+            if(incorrectPostCount != 0) {
+                1.upto(incorrectPostCount, { it ->
+                    apiClientResult << createPostForUser( userId + it )
+                })
+            }
+            blogApiClient.getPostsByUser(userId) >> apiClientResult
+
+        when: "blog service is called for post listing with the user id"
+            def result = blogService.getPostsByUser(userId)
+        then: "blog api client is called with the same user id"
+            result.posts.size() == expectedPosts
+        where:
+            userId  | correctPostCount  | incorrectPostCount    | expectedPosts
+            1       | 10                | 10                    | 10
+            5       | 0                 | 100                   | 0
+            45      | 2344              | 0                     | 2344
+            1       | 45                | 101                   | 45
+    }
+
+    def createPostForUser(long userId){
+        def result = new Post()
+        result.userId = userId
+        result.id = 1
+        result.title = "title"
+        result.body = "body"
+        return result
+    }
 }

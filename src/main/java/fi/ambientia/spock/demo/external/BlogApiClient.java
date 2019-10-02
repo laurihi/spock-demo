@@ -32,7 +32,6 @@ public class BlogApiClient {
                 new ParameterizedTypeReference<List<Post>>() {
                 });
 
-
         return response.getBody();
     }
 }

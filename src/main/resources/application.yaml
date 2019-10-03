@@ -1,11 +1,8 @@
 
-
 server.port: 8088
 post.api.base: https://jsonplaceholder.typicode.com/
 
 ---
 
-profiles: test
-
-
+spring.profiles: test
 post.api.base: http://dummy-api.base/

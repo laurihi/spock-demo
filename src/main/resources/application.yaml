@@ -1,3 +1,11 @@
 
-server.port=8088
-post.api.base=https://jsonplaceholder.typicode.com/
+
+server.port: 8088
+post.api.base: https://jsonplaceholder.typicode.com/
+
+---
+
+profiles: test
+
+
+post.api.base: http://dummy-api.base/

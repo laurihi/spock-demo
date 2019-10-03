@@ -1,5 +1,6 @@
-package fi.ambientia.spock.demo.controller
+package fi.ambientia.spock.demo.controller.mockmvc
 
+import fi.ambientia.spock.demo.controller.BlogsController
 import fi.ambientia.spock.demo.external.BlogApiClient
 import fi.ambientia.spock.demo.model.Post
 import fi.ambientia.spock.demo.service.BlogService
@@ -19,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @WebMvcTest(controllers = [BlogsController])
-class BlogsControllerSpec extends Specification{
+class BlogsControllerMockMvcSpec extends Specification{
 
     def postApiBase = "http://url.to.service"
     def restTemplate = Mock(RestTemplate)

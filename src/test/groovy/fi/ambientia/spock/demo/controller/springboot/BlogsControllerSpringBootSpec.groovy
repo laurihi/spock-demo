@@ -16,6 +16,8 @@ import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Import(IntegrationTestConfiguration)
@@ -38,13 +40,32 @@ class BlogsControllerSpringBootSpec extends Specification {
     def "Request made to posts calls post api'"() {
         given: "api response from blog api contains one blog post"
             List<Post> resultPosts = [new Post()]
-            ResponseEntity<List< Post>> apiResponse = new ResponseEntity<>(resultPosts, HttpStatus.OK)
+            ResponseEntity<List<Post>> apiResponse = new ResponseEntity<>(resultPosts, HttpStatus.OK)
 
         when: "get all posts endpoint on controller called"
-            def postList = restTemplate.getForEntity('/posts', PostList)
+            restTemplate.getForEntity('/posts', PostList)
 
         then: "blog post api endpoint /posts is called'"
-            1* mockRestTemplate.exchange(postApiBase+"/posts", HttpMethod.GET, null, _) >> apiResponse
+            1 * mockRestTemplate.exchange(postApiBase + "/posts", HttpMethod.GET, null, _) >> apiResponse
 
     }
+
+    def "Response from controller contains posts'"() {
+        given: "api response from blog api contains one blog post"
+
+            List<Post> resultPosts = [new Post()]
+            ResponseEntity<List< Post>> apiResponse = new ResponseEntity<>(resultPosts, HttpStatus.OK)
+            mockRestTemplate.exchange(postApiBase+"/posts",
+                    HttpMethod.GET, null, _) >> apiResponse
+
+        when: "get all posts endpoint on controller called"
+            def response = restTemplate.getForEntity('/posts', PostList)
+
+        then: "response from blogs controller is 200 an contains one post"
+            response.statusCode == HttpStatus.OK
+            response.body.posts
+            response.body.posts.size() == 1
+    }
+
+
 }

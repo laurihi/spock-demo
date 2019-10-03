@@ -18,7 +18,7 @@ class BlogServiceSpec extends Specification {
         when: "blogService is queried for posts"
             blogService.getPosts()
         then: "action is delegated to blogApiClient"
-            1 * blogApiClient.getPosts()
+            1 * blogApiClient.getPosts() >> []
     }
 
     def "when getting all posts, amount of posts is not filtered"(){

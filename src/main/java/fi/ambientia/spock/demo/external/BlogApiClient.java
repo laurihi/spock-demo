@@ -1,6 +1,7 @@
 package fi.ambientia.spock.demo.external;
 
 import fi.ambientia.spock.demo.model.Post;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -13,14 +14,16 @@ import java.util.List;
 public class BlogApiClient {
 
     private final RestTemplate restTemplate;
+
     private String postApiBase;
 
     private final String API_ENDPOINT_POSTS = "/posts";
 
-    public BlogApiClient(@Value("${post.api.base}") String postApiBase){
+    public BlogApiClient(@Value("${post.api.base}") String postApiBase,
+                         @Autowired RestTemplate restTemplate){
 
         this.postApiBase = postApiBase.replaceAll("/$", "");
-        this.restTemplate = new RestTemplate();
+        this.restTemplate = restTemplate;
     }
 
     public List<Post> getPostsByUser(long userId){

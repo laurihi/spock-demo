@@ -46,6 +46,7 @@ class BlogServiceSpec extends Specification {
             PostList postList = blogService.getPosts();
         then: "post list content length equals to zero"
             postList.posts.size() == 0
+            notThrown(Exception)
     }
 
     def "when getting all posts for a user, user id is given to blog api client"(){
@@ -72,7 +73,7 @@ class BlogServiceSpec extends Specification {
     }
 
     @Unroll
-    def "blog returns #expectedPosts posts for user #userId" (){
+    def "blog returns #expectedPosts posts for user #userId and filters #incorrectPostCount posts" (){
         given: "blogApiClient returns posts with correct and incorrect user ids"
             def apiClientResult = []
             if(correctPostCount != 0) {

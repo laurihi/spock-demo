@@ -1,6 +1,5 @@
 package fi.ambientia.spock.demo.external;
 
-import fi.ambientia.spock.demo.model.posts.Post;
 import fi.ambientia.spock.demo.model.users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +21,7 @@ public class UserApiClient {
     //https://jsonplaceholder.typicode.com/users
     private final String API_ENDPOINT_POSTS = "/users";
 
-    public UserApiClient(@Value("${post.api.base}") String postApiBase,
+    public UserApiClient(@Value("${api.base}") String postApiBase,
                          @Autowired RestTemplate restTemplate){
 
         this.postApiBase = postApiBase.replaceAll("/$", "");

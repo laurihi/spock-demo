@@ -19,7 +19,7 @@ public class BlogApiClient {
 
     private final String API_ENDPOINT_POSTS = "/posts";
 
-    public BlogApiClient(@Value("${post.api.base}") String postApiBase,
+    public BlogApiClient(@Value("${api.base}") String postApiBase,
                          @Autowired RestTemplate restTemplate){
 
         this.postApiBase = postApiBase.replaceAll("/$", "");

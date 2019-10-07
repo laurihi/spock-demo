@@ -1,6 +1,7 @@
 package fi.ambientia.spock.demo.service
 
 import fi.ambientia.spock.demo.external.BlogApiClient
+import fi.ambientia.spock.demo.external.exception.ExternalApiUnavailableException
 import fi.ambientia.spock.demo.model.posts.Post
 import fi.ambientia.spock.demo.model.posts.PostList
 import spock.lang.Specification
@@ -37,6 +38,16 @@ class BlogServiceSpec extends Specification {
             blogService.getPosts();
         then: "Illegal argument exception is thrown"
             thrown(IllegalArgumentException)
+    }
+
+    def "when get all posts, blog api client throws an exception"(){
+        given: "blogApiClient throws exception"
+            blogApiClient.getPosts() >> { throw new ExternalApiUnavailableException() }
+        when: "all posts are queried for"
+            PostList result = blogService.getPosts()
+        then:
+            notThrown(Exception)
+            result.posts.size() == 0
     }
 
     def "when getting all posts, zero posts does not cause a problem"(){

@@ -1,11 +1,13 @@
 package fi.ambientia.spock.demo.external;
 
+import fi.ambientia.spock.demo.external.exception.ExternalApiUnavailableException;
 import fi.ambientia.spock.demo.model.posts.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public class BlogApiClient {
         this.restTemplate = restTemplate;
     }
 
-    public List<Post> getPostsByUser(long userId){
+    public List<Post> getPostsByUser(long userId) {
 
         ResponseEntity<List<Post>> response = restTemplate.exchange(
                 postApiBase + API_ENDPOINT_POSTS + "?userId="+userId,
@@ -38,15 +40,20 @@ public class BlogApiClient {
         return response.getBody();
     }
 
-    public List<Post> getPosts(){
+    public List<Post> getPosts() throws ExternalApiUnavailableException {
 
-        ResponseEntity<List<Post>> response = restTemplate.exchange(
-                postApiBase + API_ENDPOINT_POSTS,
-                HttpMethod.GET,
-                null,
-                new ParameterizedTypeReference<List<Post>>() {
-                });
+        ResponseEntity<List<Post>> response = null;
 
+        try {
+            response = restTemplate.exchange(
+                    postApiBase + API_ENDPOINT_POSTS,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<Post>>() {
+                    });
+        } catch ( RestClientException e) {
+            throw new ExternalApiUnavailableException();
+        }
         return response.getBody();
     }
 }

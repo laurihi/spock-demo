@@ -1,8 +1,8 @@
 package fi.ambientia.spock.demo.service;
 
 import fi.ambientia.spock.demo.external.BlogApiClient;
-import fi.ambientia.spock.demo.model.Post;
-import fi.ambientia.spock.demo.model.PostList;
+import fi.ambientia.spock.demo.model.posts.Post;
+import fi.ambientia.spock.demo.model.posts.PostList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

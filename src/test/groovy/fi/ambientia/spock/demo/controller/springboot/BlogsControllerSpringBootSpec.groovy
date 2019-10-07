@@ -1,7 +1,7 @@
 package fi.ambientia.spock.demo.controller.springboot
 
-import fi.ambientia.spock.demo.model.Post
-import fi.ambientia.spock.demo.model.PostList
+import fi.ambientia.spock.demo.model.posts.Post
+import fi.ambientia.spock.demo.model.posts.PostList
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Import
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification

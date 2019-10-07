@@ -1,31 +1,30 @@
 package fi.ambientia.spock.demo.controller;
 
 import fi.ambientia.spock.demo.model.posts.PostList;
+import fi.ambientia.spock.demo.model.users.UserList;
 import fi.ambientia.spock.demo.service.BlogService;
+import fi.ambientia.spock.demo.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Api
 @RestController
-public class BlogsController {
+@RequestMapping("/users")
+public class UsersController {
 
-    private BlogService blogService;
+    private final UserService userService;
 
     @Autowired
-    public BlogsController(BlogService blogService){
-        this.blogService = blogService;
+    public UsersController(UserService userService){
+        this.userService = userService;
     }
 
-    @GetMapping("/posts")
-    public PostList getPosts(){
-        return blogService.getPosts();
-    }
-
-    @GetMapping("/posts/user/{id}")
-    public PostList getPostsByUser(@PathVariable("id") Long userId){
-        return blogService.getPostsByUser(userId);
+    @GetMapping("/all")
+    public UserList getUsers(){
+        return userService.getUsers();
     }
 }

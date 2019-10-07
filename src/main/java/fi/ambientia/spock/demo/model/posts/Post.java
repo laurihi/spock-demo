@@ -1,4 +1,4 @@
-package fi.ambientia.spock.demo.model;
+package fi.ambientia.spock.demo.model.posts;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

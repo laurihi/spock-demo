@@ -2,7 +2,7 @@ package fi.ambientia.spock.demo.controller.mockmvc
 
 import fi.ambientia.spock.demo.controller.BlogsController
 import fi.ambientia.spock.demo.external.BlogApiClient
-import fi.ambientia.spock.demo.model.Post
+import fi.ambientia.spock.demo.model.posts.Post
 import fi.ambientia.spock.demo.service.BlogService
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.web.client.RestTemplate
 import spock.lang.Specification

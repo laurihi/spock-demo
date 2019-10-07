@@ -1,4 +1,4 @@
-package fi.ambientia.spock.demo;
+package fi.ambientia.spock.demo.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
